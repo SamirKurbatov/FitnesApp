@@ -22,7 +22,7 @@ namespace FitnesApp.BL
 
         public User(string firstName, Gender gender, DateTime birthday, double weight, double height)
         {
-            if (!(birthday >= DateTime.Parse("01.01.1900") || birthday <= DateTime.Now))
+            if (birthday < DateTime.Parse("01.01.1900") || birthday >= DateTime.Now)
             {
                 throw new NullReferenceException(nameof(birthday));
             }
@@ -34,11 +34,11 @@ namespace FitnesApp.BL
             {
                 throw new NullReferenceException(nameof(gender));
             }
-            if (weight < 0)
+            if (weight <= 0)
             {
                 throw new ArgumentNullException(nameof(weight));
             }
-            if (height < 0)
+            if (height <= 0)
             {
                 throw new ArgumentNullException(nameof(height));
             }
@@ -48,6 +48,11 @@ namespace FitnesApp.BL
             BirthDay = birthday;
             Weight = weight;
             Height = height;
+        }
+
+        public User()
+        {
+            
         }
 
         public User(string firstName)

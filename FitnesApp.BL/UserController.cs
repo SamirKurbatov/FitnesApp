@@ -16,7 +16,7 @@ namespace FitnesApp.BL
 
         public User CurrentUser { get; }
 
-        public bool IsNewUser { get; }
+        public bool IsNewUser { get; } = false;
 
         public UserController(string userName)
         {
@@ -34,7 +34,6 @@ namespace FitnesApp.BL
                 CurrentUser = new User(userName);
                 Users.Add(CurrentUser);
                 IsNewUser = true;
-                SaveUsers();
             }
         }
 
@@ -44,6 +43,7 @@ namespace FitnesApp.BL
             CurrentUser.BirthDay = birthDay;
             CurrentUser.Weight = weight;
             CurrentUser.Height = height;
+            SaveUsers();
         }
 
         public void SaveUsers()
@@ -62,7 +62,7 @@ namespace FitnesApp.BL
             {
                 using (var fileStream = new FileStream(USERS_FILE_NAME, FileMode.OpenOrCreate))
                 {
-                    if (binary.Deserialize(fileStream) is List<User> users)
+                    if (fileStream.Length > 1 && binary.Deserialize(fileStream) is List<User> users)
                     {
                         return users;
                     }

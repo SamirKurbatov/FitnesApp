@@ -17,6 +17,8 @@ if (userController.IsNewUser)
 
 Console.Write(userController.CurrentUser);
 
+var controller2 = new UserController(name);
+
 Console.ReadLine();
 
 static DateTime ParseDateTime()
