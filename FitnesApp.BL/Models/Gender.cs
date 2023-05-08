@@ -1,4 +1,4 @@
-﻿namespace FitnesApp.BL
+﻿namespace FitnesApp.BL.Models
 {
     [Serializable]
     public record Gender
@@ -14,9 +14,6 @@
             Name = name;
         }
 
-        public Gender()
-        {
-            
-        }
+        public Gender() { }
     }
 }

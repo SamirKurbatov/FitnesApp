@@ -1,23 +1,56 @@
 ﻿using FitnesApp.BL;
+using FitnesApp.BL.Controller;
+using FitnesApp.BL.Models;
 
 Console.Write("Введите имя: ");
 var name = Console.ReadLine();
 
 var userController = new UserController(name);
 
+var eatingController = new EatingController(userController.CurrentUser);
+
 if (userController.IsNewUser)
 {
     Console.Write("Введите пол: ");
     var gender = Console.ReadLine() ?? "Пол не введен";
-    var weight = ParseDouble("вес");
-    var height = ParseDouble("рост");
     var birthday = ParseDateTime();
-    userController.SetNewUserData(gender, birthday, weight, height);
+    var weight = ParseAndInputDouble("вес");
+    var height = ParseAndInputDouble("рост");
+    userController.SetNewUserData(name, gender, birthday, weight, height);
 }
 
 Console.Write(userController.CurrentUser);
 
-var controller2 = new UserController(name);
+Console.WriteLine("Что вы хотите сделать? ");
+Console.WriteLine("E - вести прием пищи? ");
+
+var key = Console.ReadKey();
+
+if (key.Key == ConsoleKey.E)
+{
+    var foods = EnterEating();
+    eatingController.Add(foods.food, foods.weight);
+
+    foreach (var item in eatingController.Eating.Foods)
+    {
+        Console.WriteLine(item.Key + " " + item.Value);
+    }
+}
+
+static (Food food, double weight) EnterEating()
+{
+    Console.Write("Введите имя продукта: ");
+    var food = Console.ReadLine() ?? "Продукт не введен";
+    var calories = ParseAndInputDouble("калорийность");
+    var weight = ParseAndInputDouble("вес");
+    var proteins = ParseAndInputDouble("белки");
+    var fats = ParseAndInputDouble("жиры");
+    var carbs = ParseAndInputDouble("углеводы");
+
+    var product = new Food(food, proteins, fats, carbs, calories);
+
+    return (product, weight);
+}
 
 Console.ReadLine();
 
@@ -40,7 +73,7 @@ static DateTime ParseDateTime()
     return birthday;
 }
 
-static double ParseDouble(string name)
+static double ParseAndInputDouble(string name)
 {
     while (true)
     {

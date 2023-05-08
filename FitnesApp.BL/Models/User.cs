@@ -5,12 +5,12 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace FitnesApp.BL
+namespace FitnesApp.BL.Models
 {
     [Serializable]
     public record class User
     {
-        public string FirstName { get; }
+        public string FirstName { get; set; }
 
         public Gender Gender { get; set; }
 
@@ -18,7 +18,21 @@ namespace FitnesApp.BL
 
         public double Weight { get; set; }
 
-        public double Height { get; set; } 
+        public double Height { get; set; }
+
+        public int Age
+        {
+            get
+            {
+                DateTime nowDate = DateTime.Today;
+                int age = nowDate.Year - BirthDay.Year;
+                if (BirthDay > nowDate.AddYears(-age))
+                {
+                    age--;
+                }
+                return age;
+            }
+        }
 
         public User(string firstName, Gender gender, DateTime birthday, double weight, double height)
         {
@@ -50,32 +64,19 @@ namespace FitnesApp.BL
             Height = height;
         }
 
-        public User()
-        {
-            
-        }
-
         public User(string firstName)
         {
             if (string.IsNullOrWhiteSpace(firstName))
             {
                 throw new NullReferenceException(nameof(firstName));
             }
-            FirstName = firstName; 
+            FirstName = firstName;
         }
 
-        public int Age
+        public User()
         {
-            get
-            {
-                DateTime nowDate = DateTime.Today;
-                int age = nowDate.Year - BirthDay.Year;
-                if (BirthDay > nowDate.AddYears(-age))
-                {
-                    age--;
-                }
-                return age;
-            }
+
         }
+
     }
 }
