@@ -5,11 +5,6 @@ namespace FitnesApp.BL.Controller
 {
     public class EatingController : BaseController
     {
-
-        private const string FOODS_FILE_NAME = "foodss.json";
-
-        private const string EATINGS_FILE_NAME = "eatingss.json";
-
         private readonly User user;
 
         public List<Food> Foods { get; }
@@ -41,18 +36,18 @@ namespace FitnesApp.BL.Controller
 
         private Eating GetEating()
         {
-            return base.Load<Eating>(EATINGS_FILE_NAME) ?? new Eating(user);
+            return base.Load<Eating>().FirstOrDefault() ?? new Eating(user);
         }
 
         private List<Food> GetAllFoods()
         {
-            return base.Load<List<Food>>(FOODS_FILE_NAME) ?? new List<Food>();
+            return base.Load<Food>() ?? new List<Food>();
         }
 
         private void Save()
         {
-            Save(FOODS_FILE_NAME, Foods);
-            Save(EATINGS_FILE_NAME, Eating);
+            Save(Foods);
+            Save(new List<Eating> { Eating });
         }
     }
 }

@@ -1,54 +1,19 @@
-﻿using FitnesApp.BL.Models;
-using System.Runtime.Serialization;
-using System.Text.Json;
+﻿
 
 namespace FitnesApp.BL.Controller
 {
     public abstract class BaseController
     {
-        protected void Save<T>(string fileName, T item)
+        protected IDataManager _dataSaver = new SerializeDataManager();
+
+        protected void Save<T>(List<T> item) where T : class
         {
-            var options = new JsonSerializerOptions
-            {
-                WriteIndented = true,
-                Converters = { new FoodDictionaryConverter() }
-            };
-
-
-            string jsonString = JsonSerializer.Serialize(item, options);
-            File.WriteAllText(fileName, jsonString);
+            _dataSaver.Save(item);
         }
 
-        protected T? Load<T>(string fileName)
+        protected List<T>? Load<T>() where T : class
         {
-            try
-            {
-                if (File.Exists(fileName))
-                {
-                    using (var fs = new FileStream(fileName, FileMode.Open))
-                    {
-                        if (fs.Length > 0 && JsonSerializer.Deserialize<T>(fs) is T items)
-                        {
-                            return items;
-                        }
-                        else
-                        {
-                            return default(T);
-                        }
-                    }
-                }
-                else
-                {
-                    return default(T);
-                }
-            }
-            catch (JsonException ex)
-            {
-                Console.WriteLine($"Error deserializing file {fileName}: {ex.Message}");
-                return default(T);
-            }
+            return _dataSaver.Load<T>() ?? throw new ArgumentException("Не удалось задесериализовать данные");
         }
     }
-
-
 }

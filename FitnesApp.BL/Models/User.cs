@@ -10,6 +10,8 @@ namespace FitnesApp.BL.Models
     [Serializable]
     public record class User
     {
+        public int Id { get; set; }
+
         public string FirstName { get; set; }
 
         public Gender Gender { get; set; }
@@ -73,10 +75,6 @@ namespace FitnesApp.BL.Models
             FirstName = firstName;
         }
 
-        public User()
-        {
-
-        }
-
+        public User() { }
     }
 }

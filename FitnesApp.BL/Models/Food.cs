@@ -3,30 +3,31 @@
     [Serializable]
     public record Food
     {
+        public int Id { get; set; }
         /// <summary>
         /// Название
         /// </summary>
-        public string Title { get; }
+        public string Title { get; set; }
 
         /// <summary>
         /// Белки
         /// </summary>
-        public double Proteins { get; }
+        public double Proteins { get; set; }
 
         /// <summary>
         /// Жиры
         /// </summary>
-        public double Fats { get; }
+        public double Fats { get; set; }
 
         /// <summary>
         /// Углеводы
         /// </summary>
-        public double Carbs { get; }
+        public double Carbs { get; set; }
 
         /// <summary>
         /// Калории за 100 грамм продукта
         /// </summary>
-        public double Calories { get; }
+        public double Calories { get; set; }
 
         public Food(string title, double proteins, double fats, double carbs, double calories)
         {

@@ -11,8 +11,6 @@ namespace FitnesApp.BL.Controller
 {
     public class UserController : BaseController
     {
-        private const string USERS_FILE_NAME = "usersss.json";
-
         public List<User> Users { get; }
 
         public User CurrentUser { get; }
@@ -50,17 +48,17 @@ namespace FitnesApp.BL.Controller
 
         private void SaveUsers()
         {
-            Save(USERS_FILE_NAME, Users);
+            Save(Users);
         }
 
         private List<User> GetUsers()
         {
-            var users = Load<List<User>>(USERS_FILE_NAME);
+            var users = Load<User>();
             if (users == null)
             {
-                Console.WriteLine($"File {USERS_FILE_NAME} is empty or corrupted");
+                Console.WriteLine($"File {nameof(users)} is empty or corrupted");
             }
-            return users ?? new List<User>();  
+            return users ?? new List<User>();
         }
     }
 }

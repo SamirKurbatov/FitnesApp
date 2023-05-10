@@ -1,14 +1,15 @@
-﻿
-namespace FitnesApp.BL.Models
+﻿namespace FitnesApp.BL.Models
 {
     [Serializable]
     public class Eating
     {
-        public Dictionary<Food, double> Foods { get;  }
+        public int Id { get; set; }
+
+        public Dictionary<Food, double> Foods { get; set; }
 
         public User User { get; }
 
-        public DateTime EatingMoment { get; }
+        public DateTime EatingMoment { get; set; }
 
         public Eating(User user)
         {
@@ -17,11 +18,9 @@ namespace FitnesApp.BL.Models
             Foods = new Dictionary<Food, double>();
         }
 
-        public Eating() { }
-     
         public void Add(Food food, double weight)
         {
-            var product = Foods.Keys.FirstOrDefault(f => f.Title.Equals(food.Title));
+            var product = Foods.Keys.FirstOrDefault(f => f.Title == food.Title);
 
             if (product == null)
             {

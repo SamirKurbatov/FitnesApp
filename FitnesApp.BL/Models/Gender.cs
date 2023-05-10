@@ -3,6 +3,8 @@
     [Serializable]
     public record Gender
     {
+        public int Id { get; set; }
+
         public string Name { get; set; }
 
         public Gender(string name)
